@@ -5,6 +5,8 @@ import img1 from "../style/images/logo.png";
 import img3 from "../style/images/all-icon/map.png";
 import img4 from "../style/images/all-icon/email.png"
 import { Link } from "react-router-dom";
+import Login from './Login';
+import Signup from './Signup';
 
 class NavBar extends Component
 {
@@ -53,10 +55,13 @@ class NavBar extends Component
                                 </div>
                             </div>
                             <div class="button float-left">
-                                <a href="#" class="main-btn">Login</a>
+                                {/* <a href="#" class="main-btn">Login</a> */}
+                                <button type="button" class="main-btn" data-toggle="modal" data-target="#loginModal"> Login</button>
                             </div>
+                            <Login></Login>
+                            <Signup></Signup>
                             <div class="button float-left">
-                                <a href="#" class="main-btn">Sign Up</a>
+                            <button type="button" class="main-btn" data-toggle="modal" data-target="#SignupModal"> SignUp</button>
                             </div>
                         </div>
                     </div>

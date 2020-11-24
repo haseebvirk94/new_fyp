@@ -5,6 +5,15 @@ import img2 from "../style/images/course/cu-1.jpg";
 import img1 from "../style/images/course/teacher/t-1.jpg";
 import axios, { post, put } from "axios";
 import Preloader from "./PreLoader";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+const mapStateToProps = (state) => ({
+    ...state,
+  });
+  const mapDispatchToProps = (dispatch) => ({
+    setCourseId: (courseid) =>
+      dispatch({ type: "EditCourse", payload: courseid }),
+  });
 class Courses extends Component
 {
     state={
@@ -19,8 +28,13 @@ class Courses extends Component
             courses: res.data.Content,
             isLoaded: true,
           });
+          console.log(this.state.courses);
         });
       }
+      courseTest = (courseid) => {
+        this.props.setCourseId(courseid);
+        this.props.history.push("SingleCourse")
+      };
     render()
     {
         return(
@@ -37,11 +51,15 @@ class Courses extends Component
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                     <div class="row">
-                        <div class="col-lg-4 col-md-6">
+                     
+                        {this.state.courses.map((obj,key)=>
+                        {
+                          return(
+                        <div key={key} class="col-lg-4 col-md-6">
                             <div class="singel-course mt-30">
                                 <div class="thum">
                                     <div class="image">
-                                        <img src={img2}alt="Course"/>
+                                        <img src={this.state.imageUrl + obj.thumbnail}alt="Course"/>
                                     </div>
                                     <div class="price">
                                         <span>Free</span>
@@ -49,7 +67,7 @@ class Courses extends Component
                                 </div>
                                 <div class="cont">
                                    
-                                    <a href="courses-singel.html"><h4>Learn basis javascirpt from start for beginner</h4></a>
+                        <Link onClick={()=>this.courseTest(obj.id)}><h4>{obj.name}</h4></Link>
                                     <div class="course-teacher">
                                         <div class="thum">
                                             <a href="#"><img src={img1} alt="teacher"/></a>
@@ -62,32 +80,8 @@ class Courses extends Component
                                 </div>
                             </div> 
                         </div>
-                        <div class="col-lg-4 col-md-6">
-                            <div class="singel-course mt-30">
-                                <div class="thum">
-                                    <div class="image">
-                                        <img src={img2}alt="Course"/>
-                                    </div>
-                                    <div class="price">
-                                        <span>Free</span>
-                                    </div>
-                                </div>
-                                <div class="cont">
-                                    
-                                    <a href="courses-singel.html"><h4>Learn basis javascirpt from start for beginner</h4></a>
-                                    <div class="course-teacher">
-                                        <div class="thum">
-                                            <a href="#"><img src={img1} alt="teacher"/></a>
-                                        </div>
-                                        <div class="name">
-                                            <a href="#"><h6>Mark anthem</h6></a>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                            </div> 
-                        
-                        </div>
+                          )
+                        })}
                         </div>
                         
                         </div>
@@ -102,4 +96,4 @@ class Courses extends Component
         )
     }
 }
-export default Courses;
+export default connect(mapStateToProps,mapDispatchToProps)(Courses);

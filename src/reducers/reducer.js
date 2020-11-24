@@ -29,7 +29,7 @@ const initialState = {
 const reducer = (state = { ...initialState }, action) => {
   let newQuiz = { ...state.QuizData };
   switch (action.type) {
-    case "EditAssessment":
+    case "EditCourse":
       return {
         ...state,
         Courseid: action.payload,
