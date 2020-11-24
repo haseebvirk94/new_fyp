@@ -1,0 +1,23 @@
+import React, { Component } from "react";
+
+class Preloader extends Component
+{
+    render()
+    {
+        return(
+            <div class="preloader">
+        <div class="loader rubix-cube">
+            <div class="layer layer-1"></div>
+            <div class="layer layer-2"></div>
+            <div class="layer layer-3 color-1"></div>
+            <div class="layer layer-4"></div>
+            <div class="layer layer-5"></div>
+            <div class="layer layer-6"></div>
+            <div class="layer layer-7"></div>
+            <div class="layer layer-8"></div>
+        </div>
+    </div>
+        )
+    }
+}
+export default Preloader;
