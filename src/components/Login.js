@@ -1,21 +1,67 @@
 import React, { Component } from "react";
 import './css/main.css';
 import './css/util.css';
+import Axios from "axios";
+import ActionTypes from "../constants/actiontypes";
+
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => ({
+    ...state
+  });
+  const mapDispatchToProps = (dispatch) => ({
+    Login: (user) => dispatch({ type: ActionTypes.Login, payload: user }),
+  });
 class Login extends Component
 {
     state = {
         email: '',
         password:'',
+        error:false , type:'password', loading:false
     }
     emailHandler = (e) => {
-        this.setState({ email: e.target.value });
+        this.setState({ email: e.target.value
+        ,error:false });
     }
     passwordHandler = (e) => {
-        this.setState({ password: e.target.value });
+        this.setState({ password: e.target.value, error:false });
     }
     onLogin = (e) => {
         e.preventDefault();
-    }
+        let url = this.props.url+"/api/login/";
+        let content = {
+          username: this.state.email,
+          password: this.state.password,
+        };
+        this.setState({loading:true})
+        Axios.post(url, content)
+          .then((res) => {
+            console.log(res);
+            if (res.status == 200) {
+              let token = res.data.token;
+              url = this.props.url+"/api/user/profile/";
+              Axios.get(url).then((res) => {
+                let user;
+                for (let i = 0; i < res.data.length; i++) {
+                  if (res.data[i].email == this.state.email) {
+                    user = res.data[i];
+                    user.isLoggedIn = true;
+                    break;
+                  }
+                }
+                // check admin or user
+                this.props.Login(user);
+                if (user.is_staff) this.props.history.push("admin/dashboard/");
+                else this.props.history.push("user/dashboard");
+              });
+            }
+          })
+          .catch((err) => {
+            this.setState({ loading: false })
+            this.setState({error:true})
+          });
+        }
+
     render()
     {
         
@@ -30,7 +76,7 @@ class Login extends Component
                             <div class="modal-body">
                                 <center>
             <div class="limiter ">
-		<form onSubmit={this.onLogin} class="login100-form validate-form">
+		<form onSubmit={this.onLogin} class="login100-form validate-form" style={{marginTop:"50px"}}>
         <span class="login100-form-title">
             Member Login
         </span>
@@ -50,12 +96,19 @@ class Login extends Component
                 <i class="fa fa-lock" aria-hidden="true"></i>
             </span>
         </div>
+        <div class="text-center p-t-12" hidden={!this.state.error}>
+            <span class="txt1" style={{color:"red"}}>
+                Invalid Email or password
+            </span>
+           
+        </div>
         
         <div class="container-login100-form-btn">
-            <button class="login100-form-btn">
+            <button class="login100-form-btn" type="submit">
                 Login
             </button>
         </div>
+        
 
         <div class="text-center p-t-12">
             <span class="txt1">
@@ -67,10 +120,10 @@ class Login extends Component
         </div>
 
         <div class="text-center p-t-136">
-            <a class="txt2" href="#">
+        <button class="txt2" data-dismiss="modal"  data-toggle="modal" data-target="#SignupModal">
                 Create your Account
                 <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
-            </a>
+            </button>
         </div>
     </form> </div> </center>
             </div>
@@ -82,4 +135,4 @@ class Login extends Component
         )
     }
 }
-export default Login;
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
