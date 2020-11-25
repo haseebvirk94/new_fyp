@@ -17,6 +17,7 @@ const mapDispatchToProps = (dispatch) => ({
     onQuizEnd: (next) => dispatch({ type: "Next", payload: next }),
     currentassessment: (id) =>
       dispatch({ type: "AddAssessmentConcept", payload: id }),
+    onQuizLoad: (quiz) =>
       dispatch({ type: ActionTypes.Quiz.QuizLoad, payload: quiz }),
   });
 class SingleCourse extends Component
