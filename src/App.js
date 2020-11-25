@@ -10,6 +10,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Courses from "./components/Courses";
 import SingleCourse from "./components/single_course";
+import Quiz from "./components/Quiz/Quiz";
 
 
 const hist = createBrowserHistory();
@@ -21,6 +22,7 @@ function App() {
         <Route path="/About" component={About} />
         <Route path="/Courses" component={Courses} />
         <Route path="/SingleCourse" component={SingleCourse} />
+        <Route path="/quiz" component={Quiz} />
         
         <Redirect from="/" to="/Home" />
       </Switch>

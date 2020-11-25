@@ -79,6 +79,7 @@ const reducer = (state = { ...initialState }, action) => {
     case ActionTypes.Quiz.QuizLoad:
       newQuiz.quiz = action.payload;
       newQuiz.isLoaded = true;
+      newQuiz.mode = Modes.QuizModes.Quiz;
       newQuiz.index = 0;
       return {
         ...state,

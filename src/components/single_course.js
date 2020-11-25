@@ -4,12 +4,20 @@ import NavBar from "./NavBar";
 import axios, { post, put } from "axios";
 import Preloader from "./PreLoader";
 import { connect } from "react-redux";
+import ActionTypes from "../constants/actiontypes";
+
 import img2 from "../style/images/course/cu-1.jpg";
 import img3 from "../style/images/course/teacher/t-3.jpg";
 import img4 from "../style/images/your-make/y-1.jpg";
 
 const mapStateToProps = (state) => ({
     ...state,
+});
+const mapDispatchToProps = (dispatch) => ({
+    onQuizEnd: (next) => dispatch({ type: "Next", payload: next }),
+    currentassessment: (id) =>
+      dispatch({ type: "AddAssessmentConcept", payload: id }),
+      dispatch({ type: ActionTypes.Quiz.QuizLoad, payload: quiz }),
   });
 class SingleCourse extends Component
 {
@@ -49,6 +57,29 @@ class SingleCourse extends Component
             this.setState({concepts:concepts,conceptLoaded:true})
             console.log(concepts);
         });
+    }
+    takeTest = () => {
+        this.setState({conceptLoaded:false})
+        let url = this.props.url + "/api/conceptincourse/?id=" + this.props.Courseid;
+        axios.get(url).then((res) => {
+            let concepts = res.data.Content;
+            let ids = [];
+            for (let i = 0; i < concepts.length && i < 3; i++)
+            {
+                ids.push(concepts[i].id);
+            }
+            if (ids.length > 0) {
+                console.log(ids);
+                let url = this.props.url+"/api/quiz/?ids=" + ids;
+                axios.get(url).then((res) => {
+                    let quiz = { name: "Sample Quiz", questions: res.data.Content };
+                    console.log(quiz);
+                    this.props.onQuizLoad(quiz);
+                    this.props.onQuizEnd("HomeLoad");
+                    this.props.history.push("/quiz");
+                });
+                }
+            }); 
     }
     render()
     {
@@ -135,7 +166,7 @@ class SingleCourse extends Component
                                     <li><i class="fa fa-user-o"></i>Students :  <span>100</span></li>
                                 </ul>
                                 <div class="price-button pt-10" >
-                                    <a href="#" class="main-btn">Take Test  </a>
+                                    <button onClick={this.takeTest} class="main-btn">Take Test  </button>
                                 </div>
                                 <div class="price-button pt-10" style={{marginTop:"30px"}}>
                                     <a href="#" class="main-btn">Enroll Now</a>
@@ -202,4 +233,4 @@ class SingleCourse extends Component
         )
     }
 }
-export default connect(mapStateToProps,null)(SingleCourse);
+export default connect(mapStateToProps,mapDispatchToProps)(SingleCourse);
