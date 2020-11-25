@@ -7,6 +7,7 @@ import axios, { post, put } from "axios";
 import Preloader from "./PreLoader";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
+
 const mapStateToProps = (state) => ({
     ...state,
   });

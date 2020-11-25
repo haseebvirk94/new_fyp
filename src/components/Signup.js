@@ -69,8 +69,8 @@ class Signup extends Component
       Axios.post(url, content)
         .then((res) => {
           console.log(res);
-          $('SignupModal').modal('hide');
-          
+          $('#SignupModal').modal('hide');
+          $('#loginModal').modal('hide');
         })
         .catch((err) => {
           this.setState({

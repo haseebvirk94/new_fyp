@@ -4,12 +4,32 @@ import img1 from "../style/images/logo.png";
 
 import img3 from "../style/images/all-icon/map.png";
 import img4 from "../style/images/all-icon/email.png"
-import { Link } from "react-router-dom";
+import { Link,withRouter } from "react-router-dom";
 import Login from './Login';
 import Signup from './Signup';
-
+import { connect } from "react-redux";
+const mapStateToProps = (state) => ({
+    ...state
+  });
+  const mapDispatchToProps = (dispatch) => ({
+    Logout: (user) =>
+      dispatch({ type: "Logout", payload: user }),
+  });
 class NavBar extends Component
 {
+    
+    logout=()=>
+    {
+       let User={name: "",
+        email: "",
+        isLoggedIn: false,
+        is_staff: false,
+        authToken: "",
+      id:0 }
+      this.props.Logout(User)
+      this.props.history.push("/Home");
+    }
+
     render()
     {
         return(
@@ -54,15 +74,22 @@ class NavBar extends Component
                                     <span>321 325 5678</span>
                                 </div>
                             </div>
+                            {this.props.User.isLoggedIn ?<div class="button float-left">
+                                {/* <a href="#" class="main-btn">Login</a> */}
+                                <Link type="button" class="main-btn" onClick={this.logout}> Logout</Link>
+                            </div> : (<div className="row">
                             <div class="button float-left">
                                 {/* <a href="#" class="main-btn">Login</a> */}
                                 <button type="button" class="main-btn" data-toggle="modal" data-target="#loginModal"> Login</button>
                             </div>
-                            <Login></Login>
+                            <Login ></Login>
                             <Signup></Signup>
                             <div class="button float-left">
                             <button type="button" class="main-btn" data-toggle="modal" data-target="#SignupModal"> SignUp</button>
                             </div>
+                            </div>
+                            )
+                        }
                         </div>
                     </div>
                 </div> 
@@ -81,6 +108,12 @@ class NavBar extends Component
 
                             <div class="collapse navbar-collapse sub-menu-bar" id="navbarSupportedContent">
                                 <ul class="navbar-nav mr-auto">
+                                    {this.props.User.isLoggedIn?
+                                <li class="nav-item">
+                                        <Link class="acive" to="/Dashboard">Dashboard</Link>
+                                        
+                                    </li>
+    :null}
                                     <li class="nav-item">
                                         <Link class="acive" to="/Home">Home</Link>
                                         
@@ -114,4 +147,4 @@ class NavBar extends Component
         )
     }
 } 
-export default NavBar;
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(NavBar));

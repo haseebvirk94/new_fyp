@@ -3,9 +3,9 @@ import './css/main.css';
 import './css/util.css';
 import Axios from "axios";
 import ActionTypes from "../constants/actiontypes";
-
+import { Link,withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
+import $ from "jquery";
 const mapStateToProps = (state) => ({
     ...state
   });
@@ -27,7 +27,7 @@ class Login extends Component
         this.setState({ password: e.target.value, error:false });
     }
     onLogin = (e) => {
-        e.preventDefault();
+        e.preventDefault(); 
         let url = this.props.url+"/api/login/";
         let content = {
           username: this.state.email,
@@ -38,6 +38,7 @@ class Login extends Component
           .then((res) => {
             console.log(res);
             if (res.status == 200) {
+                $('#loginModal').modal('hide');
               let token = res.data.token;
               url = this.props.url+"/api/user/profile/";
               Axios.get(url).then((res) => {
@@ -49,10 +50,13 @@ class Login extends Component
                     break;
                   }
                 }
+                
                 // check admin or user
                 this.props.Login(user);
+               
                 if (user.is_staff) this.props.history.push("admin/dashboard/");
-                else this.props.history.push("user/dashboard");
+                else this.props.history.push("/dashboard");
+
               });
             }
           })
@@ -135,4 +139,4 @@ class Login extends Component
         )
     }
 }
-export default connect(mapStateToProps,mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(Login));

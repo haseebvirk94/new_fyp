@@ -34,6 +34,16 @@ const reducer = (state = { ...initialState }, action) => {
         ...state,
         Courseid: action.payload,
       };
+      case "Logout":
+        return{
+          ...state,
+          User:action.payload
+
+        }
+      return {
+        ...state,
+        Courseid: action.payload,
+      };
       case "setTotalSections":
       return {
         ...state,
