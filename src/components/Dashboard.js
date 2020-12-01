@@ -73,7 +73,7 @@ class Dashboard extends Component
             <div class="tab-content" id="myTabContent">
               <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
                     <div class="row">
-                     
+                        {this.state.enrollments.length==0?'Not courses enrolled':null}
                         {this.state.enrollments.map((obj,key)=>
                         {
                           return(

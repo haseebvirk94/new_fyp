@@ -84,6 +84,13 @@ class SingleCourse extends Component
                 }
             }); 
     }
+    enroll = () => {
+        let url = this.props.url+"/api/courseEnrollment/";
+        let data = { course_id: this.props.Courseid, user_id: this.props.User.id };
+        axios.post(url, data).then((res) => {
+            this.props.history.push("timeline");
+        });
+    }
     render()
     {
         return(
@@ -175,7 +182,7 @@ class SingleCourse extends Component
                             </div>}
                             <Signup></Signup>
                             {this.props.User.isLoggedIn ? <div class="price-button pt-10 col s6" style={{marginTop:"30px"}}>
-                                    <a href="#" class="main-btn">Enroll Now</a>
+                                    <button onClick={this.enroll} class="main-btn">Enroll Now</button>
                                 </div>:
                                 
                                 <div class="button float-left">
