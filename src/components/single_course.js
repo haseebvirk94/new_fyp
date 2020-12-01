@@ -10,6 +10,7 @@ import img2 from "../style/images/course/cu-1.jpg";
 import img3 from "../style/images/course/teacher/t-3.jpg";
 import img4 from "../style/images/your-make/y-1.jpg";
 import { Link ,withRouter} from "react-router-dom";
+import Signup from './Signup';
 
 const mapStateToProps = (state) => ({
     ...state,
@@ -169,12 +170,17 @@ class SingleCourse extends Component
                                 </ul>
                                 <div class="row">
                                     {this.props.User.isLoggedIn ? null
-                                :<div class="price-button pt-10 col s6" style={{marginTop:"30px"}} >
+                                :<div class="price-button pt-10 col s6"  >
                                 <button onClick={this.takeTest} class="main-btn">Take Test  </button>
                             </div>}
-                                <div class="price-button pt-10 col s6" style={{marginTop:"30px"}}>
+                            <Signup></Signup>
+                            {this.props.User.isLoggedIn ? <div class="price-button pt-10 col s6" style={{marginTop:"30px"}}>
                                     <a href="#" class="main-btn">Enroll Now</a>
-                                </div>
+                                </div>:
+                                
+                                <div class="button float-left">
+                                <button type="button" class="main-btn" data-toggle="modal" data-target="#SignupModal"> Enroll Now</button>
+                                </div>}
                                 </div>
                                 
                             </div> 

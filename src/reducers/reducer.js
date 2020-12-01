@@ -80,7 +80,7 @@ const reducer = (state = { ...initialState }, action) => {
           ...state,
           Courseid:action.payload,
         }
-        case "setSectionId":
+        case "setAssessmentId":
         return{
           ...state,
           Assessmentid:action.payload,

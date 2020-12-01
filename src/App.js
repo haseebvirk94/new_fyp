@@ -12,6 +12,9 @@ import Courses from "./components/Courses";
 import SingleCourse from "./components/single_course";
 import Quiz from "./components/Quiz/Quiz";
 import Dashboard from "./components/Dashboard";
+import Progress from "./components/Progress";
+import CourseProgress from "./components/CourseProgress";
+import AssessmentProgress from "./components/AssessmentProgress";
 
 
 const hist = createBrowserHistory();
@@ -25,6 +28,9 @@ function App() {
         <Route path="/SingleCourse" component={SingleCourse} />
         <Route path="/quiz" component={Quiz} />
         <Route path="/Dashboard" component={Dashboard} />
+        <Route path="/Progress" component={Progress} />
+        <Route path="/CourseProgress" component={CourseProgress} />
+        <Route path="/AssessmentProgress" component={AssessmentProgress} />
         
         <Redirect from="/" to="/Home" />
       </Switch>

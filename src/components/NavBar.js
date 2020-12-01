@@ -40,8 +40,8 @@ class NavBar extends Component
                     <div class="col-lg-6">
                         <div class="header-contact text-lg-left text-center">
                             <ul>
-                                <li><img src={img3} alt="icon"/><span>127/5 Mark street, New york</span></li>
-                                <li><img src={img4} alt="icon"/><span>info@yourmail.com</span></li>
+                                <li><img src={img3} alt="icon"/><span>127/5 Mark street, Uet Lahore</span></li>
+                                <li><img src={img4} alt="icon"/><span>kamyaablife@gmai.com</span></li>
                             </ul>
                         </div>
                     </div>
@@ -71,7 +71,7 @@ class NavBar extends Component
                                 
                                 <div class="cont">
                                     <p>Need Help? call us free</p>
-                                    <span>321 325 5678</span>
+                                    <span>0305 173 8445</span>
                                 </div>
                             </div>
                             {this.props.User.isLoggedIn ?<div class="button float-left">
@@ -113,6 +113,7 @@ class NavBar extends Component
                                         <Link class="acive" to="/Dashboard">Dashboard</Link>
                                         
                                     </li>
+                                    
     :null}
                                     <li class="nav-item">
                                         <Link class="acive" to="/Home">Home</Link>
@@ -125,6 +126,13 @@ class NavBar extends Component
                                         <Link to="/Courses">Courses</Link>
                                        
                                     </li>
+                                    {this.props.User.isLoggedIn?
+                                <li class="nav-item">
+                                        <Link class="acive" to="/Progress">Progress</Link>
+                                        
+                                    </li>
+                                    
+    :null}
                                   
                                    
                                    
