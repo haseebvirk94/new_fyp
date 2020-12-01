@@ -54,7 +54,12 @@ class Dashboard extends Component
         isLoaded: true,
       });
     });
+        
   }
+  courseTest = (courseid) => {
+    this.props.setCourseId(courseid);
+    this.props.history.push("Timeline")
+  };
     render()
     {
         return(

@@ -6,9 +6,11 @@ import Questions from "./Questions";
 import Review from "./Review";
 import Result from "./Result";
 import Axios from "axios";
+import axios from "axios";
+import { Link } from "react-router-dom";
 import "./spinner.css";
 const mapStateToProps = (state) => {
-  return { ...state.QuizData, r: state.Result,ResultNext:state.ResultNext  };
+  return { ...state.QuizData, r: state.Result,...state};
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -35,7 +37,8 @@ class Quiz extends Component {
     else index = parseInt(id, 10);
     if (index > this.props.quiz.questions.length-1)
     {
-      this.abc(this.props.quiz.questions);
+      let newMode = Modes.QuizModes.Submit;
+      this.props.onModeChange(newMode);
     }
     if (index >= 0 && index < this.props.quiz.questions.length) {
       this.props.onIndexChange(index);
@@ -46,7 +49,7 @@ class Quiz extends Component {
     if (e.target.id === "Quiz") newMode = Modes.QuizModes.Quiz;
     if (e.target.id === "Review") newMode = Modes.QuizModes.Review;
     if (e.target.id === "Submit") {
-      newMode = Modes.QuizModes.Result
+      newMode = Modes.QuizModes.Submit
       // newMode = Modes.QuizModes.Submit;
       // this.submitQuiz();
       //alert("Your quiz will be end");
@@ -124,7 +127,7 @@ class Quiz extends Component {
   abc = (questions) => {
     // Calculate marks for each concept
 
-    let result = [];
+    let resultz = [];
     let concept_id = 0;
     console.log("jhadjhjahjh");
     console.log(questions);
@@ -144,17 +147,68 @@ class Quiz extends Component {
         }
       }
       concept_id = questions[i * j].concepts_id;
-      result.push({ concept_id: concept_id, obtainedMarks: obtainMarks });
-      console.log(result);
-      this.props.ResultSave(result);
-      if (this.props.ResultNext == "TestOut" || this.props.ResultNext == "SectionLoadFromConcept"||this.props.ResultNext == "SectionLoad")
-      {
-        this.props.history.push("/user/result");
-      }
-      else this.props.history.push("/result");
+      resultz.push({ concept_id: concept_id, obtainedMarks: obtainMarks });
+      console.log(resultz);
+      // this.props.ResultSave(result);
     }
-    this.props.ResultSave(result);
+    console.log('asda');
+    console.log(resultz);
+    this.props.ResultSave(resultz);
+    this.next(resultz);
   };
+  endquiz = () => {
+    this.abc(this.props.quiz.questions);
+  }
+  next = (rl) => {
+    let resultz = rl;
+    console.log(resultz);
+      if (this.props.ResultNext == "SectionLoad") {
+        let n = 4;
+        let ids = [];
+        let results = [];
+        for (let i = 0; i < resultz.length; i++) {
+          ids.push(resultz[i].concept_id);
+          let p = Math.floor((resultz[i].obtainedMarks / 4) * 100);
+          resultz[i].performance = p;
+          console.log(resultz[i]);
+          results.push(p);
+        }
+        let url = this.props.url+"/api/assessmentenrollment/";
+        let data = {
+          course_id:this.props.Courseid,
+          user_id: this.props.User.id,
+          assessment_id: this.props.Assessmentid,
+          array: resultz,
+        };
+        axios.post(url, data).then((res) => {
+          this.props.history.push("timeline");
+        });
+      } else if (this.props.ResultNext == "SectionLoadFromConcept") {
+        // Update Performance
+        let url = this.props.url+"/api/performance/";
+        let data = {
+          userid: this.props.User.id,
+          assessment: this.props.Assessmentid,
+          enrollment:this.props.enrollment,
+          concept_id: this.props.Result[0].concept_id,
+          performance: Math.floor((this.props.Result[0].obtainedMarks / 4) * 100),
+        };
+        axios.put(url, data).then((res) => {
+          this.props.history.push("timeline");
+        });
+      } else if (this.props.ResultNext == "TestOut") {
+        let url=this.props.url+"/api/assessmentenrollment/";
+        console.log(url);
+        let Content={assessment_id:this.props.Assessmentid}
+        axios.put(url,Content).then((res) => {
+          this.props.history.push("timeline");
+        });
+        
+      } else if (this.props.ResultNext == "singlecourse") {
+        this.props.history.push("SingleCourse");
+      }
+    
+  }
   renderMode() {
     if (this.props.mode === Modes.QuizModes.Quiz) {
       return <Questions move={this.move} />;
@@ -167,6 +221,7 @@ class Quiz extends Component {
   render() {
     return (
       <div style={rootStyle}>
+        <br></br>
         {this.props.isLoaded ? this.renderMode() : <div class="preloader-wrapper big active spinner">
     <div class="spinner-layer spinner-blue-only ">
       <div class="circle-clipper left">
@@ -181,13 +236,15 @@ class Quiz extends Component {
         {this.props.mode !== Modes.QuizModes.Submit && (
           <div class="container" >
             <hr />
-            <button
-              id="Submit"
-              className="btn main-btn"
-              onClick={this.setMode}
-            >
-              End Quiz
-            </button>
+        
+              <button
+                id="Submit"
+                className="btn main-btn"
+                onClick={this.setMode}
+              >
+                End Quiz
+            </button> 
+            
             <button
               id="Quiz"
               className="btn btn-info red"
@@ -207,6 +264,13 @@ class Quiz extends Component {
             
           </div>
         )}
+        {this.props.mode == Modes.QuizModes.Submit ?
+              <button
+                onClick={this.endquiz}
+                className="btn main-btn mr-10 ml-10"
+              >
+                Next
+            </button> : null}
       </div>
     );
   }

@@ -7,6 +7,7 @@ import "./style/css/nice-select.css";
 import "./style/css/responsive.css";
 import "./style/css/style.css";
 import Home from "./components/Home";
+import Timeline from "./components/Timeline";
 import About from "./components/About";
 import Courses from "./components/Courses";
 import SingleCourse from "./components/single_course";
@@ -25,6 +26,7 @@ function App() {
         <Route path="/Home" component={Home} />
         <Route path="/About" component={About} />
         <Route path="/Courses" component={Courses} />
+        <Route path="/Timeline" component={Timeline} />
         <Route path="/SingleCourse" component={SingleCourse} />
         <Route path="/quiz" component={Quiz} />
         <Route path="/Dashboard" component={Dashboard} />

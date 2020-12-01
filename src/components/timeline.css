@@ -1,0 +1,340 @@
+.stu-db {
+  position: relative;
+  /* overflow: hidden;
+    */
+  background: #f7f8f9;
+}
+.udb {
+  padding: 50px 25px;
+  position: relative;
+  overflow: hidden;
+}
+.udb-sec {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 35px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 2px;
+  box-shadow: 0px 5px 18px -11px rgba(150, 150, 150, 0.8);
+  border: 1px solid #f3f2f2;
+}
+.udb-sec h4 {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eeeeef;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  color: #203245;
+}
+.udb-sec h4 img {
+  margin-right: 10px;
+  vertical-align: bottom;
+  width: 24px;
+}
+.udb-sec p {
+}
+.udb-cour {
+}
+.sdb-cours {
+  position: relative;
+  overflow: hidden;
+  padding-top: 25px;
+}
+.sdb-cours ul {
+}
+.sdb-cours ul li {
+  width: 50%;
+  float: left;
+  padding-right: 15px;
+  margin-bottom: 15px;
+}
+/*-------------------------------------------------*/
+/* = 19.STUDENT DASHBOARD - COURSES 
+/*-------------------------------------------------*/
+.list-mig-like-com {
+  position: relative;
+  border-radius: 5px;
+  /* margin-bottom: 20px;
+    */
+  background: #14addb;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.list-mig-like-com:before {
+  content: "";
+  position: absolute;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.82) 10%,
+    rgba(84, 84, 84, 0.35) 80%
+  );
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  border-radius: 5px;
+}
+.list-mig-lc-img img {
+  width: 100%;
+  border-radius: 5px;
+}
+.list-mi-pr {
+  top: 15px;
+}
+.list-mig-lc-con {
+  position: absolute;
+  width: 100%;
+  margin-top: -92px;
+  padding: 20px 20px 0px 20px;
+  display: block;
+}
+.list-mig-lc-con h5 {
+  font-size: 18px;
+  color: #fff;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.list-mig-lc-con h6 {
+  font-size: 14px;
+  color: #fff;
+  position: absolute;
+  top: -20px;
+  /* right: 0px;
+    */
+  border: 1px solid #fff;
+  padding: 8px 10px 3px 10px;
+  border-radius: 18px;
+  margin-bottom: 5px;
+  padding-bottom: 10px;
+}
+.list-mig-lc-con p {
+  color: #c1c1c1;
+}
+.sdb-cours ul li:nth-child(3) {
+  margin-bottom: 0px;
+}
+.sdb-cours ul li:nth-child(4) {
+  margin-bottom: 0px;
+}
+.udb-time-line ul {
+  padding: 0px;
+  padding-top: 25px;
+}
+.udb-time-line ul li {
+  position: relative;
+  overflow: hidden;
+  padding-left: 70px;
+  padding-bottom: 20px;
+}
+.udb-time-line ul li:hover .fa-clock-o {
+  background: #e66030;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.udb-time-line ul li i {
+  width: 35px;
+  height: 35px;
+  background: #517ce6;
+  border-radius: 50%;
+  text-align: center;
+  padding: 8px 10px;
+  margin-left: -68px;
+  position: absolute;
+  z-index: 99;
+  color: #fff;
+  font-size: 17px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+.days h4 {
+  margin: 25px 0px 15px 0px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: "Open Sans", sans-serif;
+  color: #213d44;
+}
+.udb-time-line ul li h4 {
+  margin-top: 7px;
+}
+.udb-time-line ul li p {
+  padding-top: 0px;
+}
+.l-info-pack-plac::after {
+  content: "";
+  background: #eeeeef;
+  position: absolute;
+  width: 1px;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  left: 19px;
+}
+.days h4 span {
+  color: #929596;
+  font-weight: 600;
+}
+/*-------------------------------------------------*/
+/* = 20.STUDENT DASHBOARD - TIME LINE 
+/*-------------------------------------------------*/
+.sdb-cl-tim {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+.sdb-cl-day {
+  float: left;
+  width: 25%;
+}
+.sdb-cl-day h5 {
+  text-transform: uppercase;
+}
+.sdb-cl-day span {
+  font-size: 12px;
+  color: #9ba3ab;
+}
+.sdb-cl-class {
+  float: left;
+  width: 75%;
+}
+.sdb-cl-class ul {
+  padding-top: 0px;
+}
+.sdb-cl-class ul li {
+  padding-left: 0px;
+}
+.sdb-cl-class-tim {
+  float: left;
+  width: 25%;
+  border-right: 1px solid #dcdcdc;
+}
+.sdb-cl-class-tim span {
+  display: block;
+  color: #203245;
+  font-weight: 600;
+  font-size: 14px;
+}
+.sdb-cl-class-name {
+  float: left;
+  width: 75%;
+  padding-left: 25px;
+  position: relative;
+}
+.sdb-cl-class-name h5 {
+}
+.sdb-cl-class-name h5 span {
+  float: right;
+  font-size: 12px;
+  color: #9ba3ab;
+  border: 1px solid #cccdce;
+  border-radius: 20px;
+  padding: 0px;
+}
+
+.sdb-cl-class-name h5 span button:hover {
+  color: #ffc600;
+  border-color: #07294d;
+  background-color: #07294d;
+}
+.sdb-cl-class-name h5 span button {
+  display: inline-block;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid #ffc600;
+  padding: 0 35px;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  line-height: 50px;
+  border-radius: 20px;
+  color: #07294d;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  background-color: #ffc600;
+}
+.sdn-hall-na {
+  font-size: 12px;
+  color: #9ba3ab;
+}
+.sdb-cl-class-name::after {
+  content: "";
+  background: #2ebf33;
+  position: absolute;
+  width: 7px;
+  top: 3px;
+  bottom: 0;
+  height: 7px;
+  left: 9px;
+  border-radius: 25px;
+}
+.sdb-cl-class-name-lev::after {
+  background: #bfa12e;
+}
+.sdb-tabl-com {
+}
+.sdb-tabl-com tr {
+  color: #969595;
+  border-bottom: 1px solid #d0d0d0;
+}
+.sdb-tabl-com tr td {
+  font-size: 15px;
+  color: #333;
+  padding: 14px 14px 14px 0px;
+}
+.sdb-pro-table {
+}
+.sdb-pro-table tr {
+}
+.sdb-pro-table tr td {
+}
+.sdb-bot-edit {
+  margin-top: 25px;
+}
+.sdb-bot-edit p {
+  padding-bottom: 10px;
+}
+.sdb-bot-edit a {
+}
+.sdb-btn {
+  background: #2f4f73;
+  font-size: 12px;
+  font-weight: 600;
+}
+.sdb-btn i {
+  margin-right: 10px;
+  font-size: 14px;
+  vertical-align: initial;
+}
+.sdb-btn:hover {
+  background: #476990;
+  color: #fff;
+}
+.sdb-btn:active {
+  background: #476990;
+  color: #fff;
+}
+.sdb-btn:focus {
+  background: #476990;
+  color: #fff;
+}
+.backdrop {
+  background-color: #ededed;
+}

@@ -78,7 +78,7 @@ class SingleCourse extends Component
                     let quiz = { name: "Sample Quiz", questions: res.data.Content };
                     console.log(quiz);
                     this.props.onQuizLoad(quiz);
-                    this.props.onQuizEnd("HomeLoad");
+                    this.props.onQuizEnd("singlecourse");
                     this.props.history.push("/quiz");
                 });
                 }
