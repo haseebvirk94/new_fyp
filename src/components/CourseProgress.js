@@ -150,7 +150,7 @@ const mapStateToProps = (state) => ({
                   <div class="row">
                     <div class="col">
                       <h5 class="card-title text-uppercase text-muted mb-0">Course Progress</h5>
-            <span class="h2 font-weight-bold mb-0">{(this.state.completed.length/this.state.totalSections)*100}%</span>
+            <span class="h2 font-weight-bold mb-0">{this.state.completed.length>0?(this.state.completed.length/this.state.totalSections)*100:0}%</span>
                     </div>
                     <div class="col-auto">
                       <div class="icon icon-shape bg-gradient-green text-white rounded-circle shadow">

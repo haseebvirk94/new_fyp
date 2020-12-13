@@ -9,6 +9,7 @@ import Axios from "axios";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "./spinner.css";
+import Preloader from "../PreLoader";
 const mapStateToProps = (state) => {
   return { ...state.QuizData, r: state.Result,...state};
 };
@@ -26,7 +27,7 @@ var rootStyle = {
   height: "100%",
 };
 class Quiz extends Component {
-  state = {};
+  state = {loading:false};
   move = (e) => {
     let id = e.target.id;
     let index = 0;
@@ -62,6 +63,7 @@ class Quiz extends Component {
     this.props.onModeChange(newMode);
   };
   submitQuiz = () => {
+    this.setState({loading:true})
     if (this.props.isImprovement === false) {
       let url =
       this.props.url+"/api/" + this.props.quiz.type + "_History/";
@@ -157,6 +159,7 @@ class Quiz extends Component {
     this.next(resultz);
   };
   endquiz = () => {
+    this.setState({loading:true})
     this.abc(this.props.quiz.questions);
   }
   next = (rl) => {
@@ -185,14 +188,16 @@ class Quiz extends Component {
         });
       } else if (this.props.ResultNext == "SectionLoadFromConcept") {
         // Update Performance
+        
         let url = this.props.url+"/api/performance/";
         let data = {
           userid: this.props.User.id,
           assessment: this.props.Assessmentid,
           enrollment:this.props.enrollment,
           concept_id: this.props.Result[0].concept_id,
-          performance: Math.floor((this.props.Result[0].obtainedMarks / 4) * 100),
+          performance: Math.floor((resultz[0].obtainedMarks / 4) * 100),
         };
+        console.log(data);
         axios.put(url, data).then((res) => {
           this.props.history.push("timeline");
         });
@@ -221,6 +226,7 @@ class Quiz extends Component {
   render() {
     return (
       <div style={rootStyle}>
+        {this.state.loading?<Preloader></Preloader>:null}
         <br></br>
         {this.props.isLoaded ? this.renderMode() : <div class="preloader-wrapper big active spinner">
     <div class="spinner-layer spinner-blue-only ">

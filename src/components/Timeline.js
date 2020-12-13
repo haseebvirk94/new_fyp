@@ -3,6 +3,8 @@ import axios, { post, put } from "axios";
 import { connect } from "react-redux";
 import ActionTypes from "../constants/actiontypes.js";
 import "./timeline.css";
+
+import Preloader from "./PreLoader";
 import NavBar from "./NavBar";
 const mapStateToProps = (state) => ({
     ...state,
@@ -12,7 +14,9 @@ const mapDispatchToProps = (dispatch) => ({
     onQuizLoad: (quiz) =>
       dispatch({ type: ActionTypes.Quiz.QuizLoad, payload: quiz }),
       currentassessment: (id) =>
-    dispatch({ type: "AddAssessmentConcept", payload: id }),
+        dispatch({ type: "AddAssessmentConcept", payload: id }),
+        currentenrollment: (id) =>
+        dispatch({ type: "setEnrollment", payload: id }),
   });
 class Timeline extends Component {
     state = {
@@ -39,7 +43,7 @@ class Timeline extends Component {
             this.setState({
                 sections:assessments,
             });
-            this.setState({ j: assessments.length });
+            this.setState({ j: 0 });
             let enrolled = res.data.enrolled;
             for (let i = 0; i < assessments.length; i++)
             {
@@ -58,18 +62,20 @@ class Timeline extends Component {
                             if (enrolled[k].is_active) {
                                 na[i].completed = false;
                                 na[i].active = true;
-                                
+                                this.setState({ enrolling: false });
                             }
                             else {
                                 na[i].completed = true;
                                 na[i].active = false;
-                                this.setState({ enrolling: false })
+                                
                             }
                         }
                         
                     }
                     this.setState({ sections: na });
-                    this.setState({ j: assessments.length-i-1 });
+                    console.log('shfjsdhfkjskfdjshfsk');
+                    console.log(i);
+                    this.setState({ j: this.state.j+1 });
                     console.log(this.state.sections);
                 });
             }
@@ -77,9 +83,27 @@ class Timeline extends Component {
 
         });
     }
+    startQuiz = (obj,enr) => {
+        this.props.currentenrollment(enr);
+        console.log('qioz');
+        console.log(obj);
+        this.setState({ isLoaded: false });
+          let url = this.props.url + "/api/quiz/?id=" + obj.concept;
+            console.log('here');
+            axios.get(url).then((res) => {
+            // Convert res.data.content to array
+            let quiz = { name: "Sample Quiz", questions: res.data.Content };
+            console.log(quiz);
+            this.props.onQuizLoad(quiz);
+            this.props.onQuizEnd("SectionLoadFromConcept");
+            this.props.history.push('quiz')
+          });
+        
+      }
     checkLoaded = () => {
         setTimeout(() => {
-            if (this.state.j == 0)
+            
+            if (this.state.j == this.state.sections.length)
             {
                 this.setState({ isLoaded: true });
                 // this.getStatus();
@@ -92,6 +116,7 @@ class Timeline extends Component {
     }
     getStatus = (i) => {
         let na = [...this.state.sections];
+        console.log(na[i]);
         let url = this.props.url+"/api/performance/?enrollment="+na[i].enr;
         axios.get(url).then((res) => {
             console.log(res.data);
@@ -112,6 +137,7 @@ class Timeline extends Component {
     }
     assessment = (aid) =>
     {
+        this.setState({ isLoaded: false });
         let sectionid = aid;
         this.props.currentassessment(aid);
         let url = this.props.url + "/api/quiz/?assessment_id=" + sectionid;
@@ -125,6 +151,7 @@ class Timeline extends Component {
         }); 
     }
     testout = (id) => {
+        this.setState({ isLoaded: false });
         let assessment_id =id;
         this.props.currentassessment(assessment_id);
         let url = this.props.url+"/api/quiz/?assessment_id=" + assessment_id;
@@ -170,11 +197,11 @@ class Timeline extends Component {
                                                     return (<div>
                                                         <li>
                                              <div class="sdb-cl-class-tim">
-                                                                <span>{obj.active || obj.completed ? o.status : 'inacive'}</span>
+                                                                <span>{obj.active || obj.completed ? o.status?o.status:'loading' : 'inacive'}</span>
                                              </div>
                                              <div class="sdb-cl-class-name">
-                                                    <h5>{o.name} <span>{obj.completed || obj.active ? <button className='btn  ' onClick={() => this.assessment(obj.id)}>Start Quiz</button> : 'start quiz'}</span></h5>
-                                                 <span class="sdn-hall-na">{obj.active || obj.completed ? o.performance+"%" : '0%'}</span>
+                                                    <h5>{o.name} <span>{obj.completed || obj.active ? <button className='btn  ' onClick={() => this.startQuiz(o,obj.enr)}>Start Quiz</button> : 'start quiz'}</span></h5>
+                                                 <span class="sdn-hall-na">{obj.active || obj.completed ? o.performance!=null? o.performance+"%":'loading' : '0%'}</span>
                                              </div>
                                          </li>
                                                     </div>)
@@ -194,13 +221,14 @@ class Timeline extends Component {
                              </div>
                                 </li>
                                 </div>)
-                        }):null}    
+                        }):<Preloader></Preloader>}    
                        
                         
                         
                         
                     </ul>
-                </div>
+                
+                    </div>
             </div>
         </div>
     </div></div> );
