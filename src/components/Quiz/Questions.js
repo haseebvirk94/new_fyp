@@ -24,6 +24,12 @@ class Questions extends Component {
     console.log(quiz);
     this.props.onAnswer(quiz);
   };
+  check = (e) => {
+    if (window.confirm('Are You Sure'))
+    {
+      this.props.setMode(e);
+      }
+  }
   render() {
     let question = this.props.quiz.questions[this.props.index];
     console.log(this.props.quiz.questions[0]);
@@ -76,11 +82,19 @@ class Questions extends Component {
             Next
           </button>
           <button
+                id="Submit"
+                className="btn main-btn m-1"
+                onClick={this.check}
+              >
+                End Quiz
+            </button> 
+          <button
             id="last"
             className="btn main-btn"
             onClick={this.props.move}
             style={{visibility: "hidden"}}
           >
+
             Last
           </button>
           <button

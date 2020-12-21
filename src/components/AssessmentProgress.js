@@ -155,7 +155,7 @@ const mapStateToProps = (state) => ({
   
                         return(<tr >
                            <th>{obj.concept_name}</th>
-                        <th>{obj.status}</th> 
+                          <th>{obj.status}</th> 
                         {obj.performance>75?<th>
                             
                             <ProgressBar variant="success" now={obj.performance} /></th>:obj.performance>=50?<th>

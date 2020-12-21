@@ -7,6 +7,7 @@ import Review from "./Review";
 import Result from "./Result";
 import Axios from "axios";
 import axios from "axios";
+import NavBar from "../NavBar";
 import { Link } from "react-router-dom";
 import "./spinner.css";
 import Preloader from "../PreLoader";
@@ -194,7 +195,7 @@ class Quiz extends Component {
           userid: this.props.User.id,
           assessment: this.props.Assessmentid,
           enrollment:this.props.enrollment,
-          concept_id: this.props.Result[0].concept_id,
+          concept_id: resultz[0].concept_id,
           performance: Math.floor((resultz[0].obtainedMarks / 4) * 100),
         };
         console.log(data);
@@ -216,7 +217,7 @@ class Quiz extends Component {
   }
   renderMode() {
     if (this.props.mode === Modes.QuizModes.Quiz) {
-      return <Questions move={this.move} />;
+      return <Questions setMode={this.setMode} move={this.move} />;
     } else if (this.props.mode === Modes.QuizModes.Review) {
       return <Review quiz={this.props.quiz} move={this.move} />;
     } else {
@@ -226,6 +227,7 @@ class Quiz extends Component {
   render() {
     return (
       <div style={rootStyle}>
+        <NavBar></NavBar>
         {this.state.loading?<Preloader></Preloader>:null}
         <br></br>
         {this.props.isLoaded ? this.renderMode() : <div class="preloader-wrapper big active spinner">
@@ -243,13 +245,7 @@ class Quiz extends Component {
           <div class="container" >
             <hr />
         
-              <button
-                id="Submit"
-                className="btn main-btn"
-                onClick={this.setMode}
-              >
-                End Quiz
-            </button> 
+              
             
             <button
               id="Quiz"
@@ -272,8 +268,9 @@ class Quiz extends Component {
         )}
         {this.props.mode == Modes.QuizModes.Submit ?
               <button
-                onClick={this.endquiz}
-                className="btn main-btn mr-10 ml-10"
+            onClick={this.endquiz}
+            style={{ marginLeft: '50px' }}
+                className="btn main-btn"
               >
                 Next
             </button> : null}

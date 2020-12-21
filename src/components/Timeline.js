@@ -3,7 +3,7 @@ import axios, { post, put } from "axios";
 import { connect } from "react-redux";
 import ActionTypes from "../constants/actiontypes.js";
 import "./timeline.css";
-
+import ProgressBar from 'react-bootstrap/ProgressBar'
 import Preloader from "./PreLoader";
 import NavBar from "./NavBar";
 const mapStateToProps = (state) => ({
@@ -189,7 +189,7 @@ class Timeline extends Component {
                                                         <span> start</span>
                                                     </div>
                                                     <div class="sdb-cl-class-name">
-                                                        <h5>Assessment <span>{obj.completed || obj.active || this.state.enrolling ? <button className='btn  ' onClick={() => this.assessment(obj.id)}>Start Quiz</button> : 'start quiz'}</span></h5>
+                                                        <h5>Assessment <span>{obj.completed || obj.active || this.state.enrolling ? <button className='sdb-cl-class-name-btn   ' onClick={() => this.assessment(obj.id)}>Start Quiz</button> : <button disabled className='sdb-cl-class-name-grey'> Start Quiz</button>}</span></h5>
                                                         <span class="sdn-hall-na">Start Section</span>
                                                     </div>
                                                 </li>
@@ -200,8 +200,8 @@ class Timeline extends Component {
                                                                 <span>{obj.active || obj.completed ? o.status?o.status:'loading' : 'inacive'}</span>
                                              </div>
                                              <div class="sdb-cl-class-name">
-                                                    <h5>{o.name} <span>{obj.completed || obj.active ? <button className='btn  ' onClick={() => this.startQuiz(o,obj.enr)}>Start Quiz</button> : 'start quiz'}</span></h5>
-                                                 <span class="sdn-hall-na">{obj.active || obj.completed ? o.performance!=null? o.performance+"%":'loading' : '0%'}</span>
+                                                    <h5>{o.name} <span>{obj.completed || obj.active ? <button className='sdb-cl-class-name-btn   ' onClick={() => this.startQuiz(o,obj.enr)}>Start Quiz</button> : <button disabled className='sdb-cl-class-name-grey'> Start Quiz</button>}</span></h5>
+                                                 <span class="sdn-hall-na">{obj.active || obj.completed ? o.performance!=null?o.performance+"%":'loading' : '0%'}</span>
                                              </div>
                                          </li>
                                                     </div>)
@@ -212,7 +212,7 @@ class Timeline extends Component {
                                                         <span>finish</span>
                                                     </div>
                                                     <div class="sdb-cl-class-name">
-                                                        <h5>Testout <span>{obj.completed || (obj.active && obj.strong) ? <button className='btn' onClick={() => this.testout(obj.id)}>Start Quiz</button> : 'start quiz'}</span></h5>
+                                                        <h5>Testout <span>{obj.completed || (obj.active && obj.strong) ? <button className='sdb-cl-class-name-btn ' onClick={() => this.testout(obj.id)}>Start Quiz</button> : <button disabled className='sdb-cl-class-name-grey'> Start Quiz</button>}</span></h5>
                                                         <span class="sdn-hall-na">End Section</span>
                                                     </div>
                                                 </li>

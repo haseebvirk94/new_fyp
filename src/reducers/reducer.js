@@ -6,7 +6,7 @@ const initialState = {
   enrollment:0,
   CompleteCourseSections:0,
   TotalCourseSections:0,
-  url:"http://148.66.129.17:8082",
+  url:"http://127.0.0.1:8000",
   ResultNext: "",
   QuizData: {
     quiz: {

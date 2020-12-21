@@ -24,8 +24,8 @@ function Result(props) {
             {q.options.map((option) => (
                             <div className="row  m-l-10 p-l-10">
                 <div key={option.id} className="">
-                    <input  id={option.id} type="checkbox" checked={option.selected} disabled   type="checkbox" class="form-check-input"/>
-                    <label class="form-check-label" for="exampleCheck1">{option.name}</label>
+                    <input  id={option.id} type="checkbox" checked={option.selected || option.isAnswer} disabled  type="checkbox" class="form-check-input"/>
+                  <label class={ option.isAnswer ? "text-success" : option.selected ?"text-danger" : "text-dark"} for={option.id}>{option.name}</label>
                 </div>
                 </div>
               ))}

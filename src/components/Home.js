@@ -26,8 +26,7 @@ class Home extends Component
                             <h1 data-animation="bounceInLeft" data-delay="1s" style={{fontSize:"50px"}}>Choose the right theme for education</h1>
                             <p data-animation="fadeInUp" data-delay="1.3s">Donec vitae sapien ut libearo venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt  Sed fringilla mauri amet nibh.</p>
                             <ul>
-                                
-                                <li><Link data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2" >Get Started</Link></li>
+                                <li><Link to='courses' data-animation="fadeInUp" data-delay="1.9s" class="main-btn main-btn-2" >Access Yourself</Link></li>
                             </ul>
                         </div>
                     </div>
