@@ -1,7 +1,7 @@
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.js';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.js";
 import "./style/css/animate.css";
 import "./style/css/nice-select.css";
 import "./style/css/responsive.css";
@@ -17,15 +17,16 @@ import Progress from "./components/Progress";
 import CourseProgress from "./components/CourseProgress";
 import AssessmentProgress from "./components/AssessmentProgress";
 import EditableContent from "./components/admin/Contents/EditableContent";
-import Course from "./components/admin/Course/Course";
 import adminCourses from "./components/admin/Course/Courses";
 import AddCourse from "./components/admin/Course/AddCourse";
+import AddAssessment from "./components/admin/Course/AddAssessment";
+import Assessment from "./components/admin/Course/Assessment";
 
 // import adminCourses from "./components/admin/Courses";
 const hist = createBrowserHistory();
 function App() {
   return (
-      <Router history={hist}>
+    <Router history={hist}>
       <Switch>
         <Route path="/Home" component={Home} />
         <Route path="/About" component={About} />
@@ -39,10 +40,12 @@ function App() {
         <Route path="/AssessmentProgress" component={AssessmentProgress} />
         {/* <Route path="/admin/courses" component={adminCourses} /> */}
         <Route path="/admin/contents" component={EditableContent} />
-        <Route path="/admin/Course" component={Course} />
+        {/* <Route path="/admin/Course" component={Course} /> */}
         <Route path="/admin/Courses" component={adminCourses} />
-        <Route path="/admin/addcourse" component={AddCourse} />
-        {/* <Redirect from="/" to="/Home" /> */}
+        <Route path="/admin/addcourse/:id" component={AddCourse} />
+        <Route path="/admin/AddAssessment" component={AddAssessment} />
+        <Route path="/admin/Assessment" component={Assessment} />
+        <Redirect from="/" to="/Home" />
       </Switch>
     </Router>
   );

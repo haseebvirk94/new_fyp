@@ -3,10 +3,10 @@ import ActionTypes from "../constants/actiontypes";
 const initialState = {
   Courseid: 0,
   Assessmentid: 0,
-  enrollment:0,
-  CompleteCourseSections:0,
-  TotalCourseSections:0,
-  url:"http://148.66.129.17:8082",
+  enrollment: 0,
+  CompleteCourseSections: 0,
+  TotalCourseSections: 0,
+  url: "http://127.0.0.1:8000",
   ResultNext: "",
   QuizData: {
     quiz: {
@@ -23,38 +23,43 @@ const initialState = {
     isLoggedIn: false,
     is_staff: false,
     authToken: "",
-  id:0  },
+    id: 0,
+  },
   Result: [],
 };
 const reducer = (state = { ...initialState }, action) => {
   let newQuiz = { ...state.QuizData };
   switch (action.type) {
+    case "EditAssessment":
+      return {
+        ...state,
+        Courseid: action.payload,
+      };
     case "EditCourse":
       return {
         ...state,
         Courseid: action.payload,
       };
-      case "Logout":
-        return{
-          ...state,
-          User:action.payload
-
-        }
+    case "Logout":
+      return {
+        ...state,
+        User: action.payload,
+      };
       return {
         ...state,
         Courseid: action.payload,
       };
-      case "setTotalSections":
+    case "setTotalSections":
       return {
         ...state,
         TotalCourseSections: action.payload,
       };
-      case "setCompleteSections":
+    case "setCompleteSections":
       return {
         ...state,
         CompleteCourseSections: action.payload,
       };
-    case 'setEnrollment':
+    case "setEnrollment":
       return {
         ...state,
         enrollment: action.payload,
@@ -75,16 +80,16 @@ const reducer = (state = { ...initialState }, action) => {
         ...state,
         Assessmentid: action.payload,
       };
-      case "setCourseId":
-        return{
-          ...state,
-          Courseid:action.payload,
-        }
-        case "setAssessmentId":
-        return{
-          ...state,
-          Assessmentid:action.payload,
-        }
+    case "setCourseId":
+      return {
+        ...state,
+        Courseid: action.payload,
+      };
+    case "setAssessmentId":
+      return {
+        ...state,
+        Assessmentid: action.payload,
+      };
 
     case ActionTypes.Quiz.QuizLoad:
       newQuiz.quiz = action.payload;

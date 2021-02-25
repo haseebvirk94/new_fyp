@@ -1,37 +1,37 @@
-import React, { Component } from 'react'
-import axios, { post, put } from 'axios'
-import Preloader from '../../PreLoader'
-import NavBar from '../../NavBar'
+import React, { Component } from "react";
+import axios, { post, put } from "axios";
+import Preloader from "../../PreLoader";
+import NavBar from "../Navbar";
 
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux'
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
 const mapStateToProps = (state) => ({
   ...state,
-})
+});
 const mapDispatchToProps = (dispatch) => ({
-  onAddAssessment: (id) => dispatch({ type: 'EditAssessment', payload: id }),
-})
+  onAddAssessment: (id) => dispatch({ type: "EditAssessment", payload: id }),
+});
 class Course extends Component {
   state = {
     courses: [],
     isLoaded: false,
-    imageUrl: this.props.url + '/contentmanager/media/',
-  }
+    imageUrl: this.props.url + "/contentmanager/media/",
+  };
   componentDidMount() {
     if (!this.props.User.isLoggedIn) {
-      this.props.history.push('/login')
+      this.props.history.push("/login");
     }
-    let url = this.props.url + '/api/courses/'
+    let url = this.props.url + "/api/courses/";
     axios.get(url).then((res) => {
       this.setState({
         courses: res.data.Content,
         isLoaded: true,
-      })
-    })
+      });
+    });
   }
   addAssessment = (course_id) => {
-    this.props.onAddAssessment(course_id)
-  }
+    this.props.onAddAssessment(course_id);
+  };
   render() {
     return (
       <div>
@@ -73,7 +73,7 @@ class Course extends Component {
                                 <div class="course-teacher">
                                   <div class="thum">
                                     <Link
-                                      to={'/admin/addcourse/' + obj.id}
+                                      to={"/admin/addcourse/" + obj.id}
                                       class="btn btn-outline-primary"
                                     >
                                       Edit
@@ -84,7 +84,7 @@ class Course extends Component {
                                       to="/admin/AddAssessment"
                                       class="btn btn-outline-primary"
                                       onClick={() => this.addAssessment(obj.id)}
-                                      style={{ marginLeft: '100px' }}
+                                      style={{ marginLeft: "100px" }}
                                     >
                                       Assessment
                                     </Link>
@@ -93,7 +93,7 @@ class Course extends Component {
                               </div>
                             </div>
                           </div>
-                        )
+                        );
                       })}
                     </div>
                   </div>
@@ -105,7 +105,7 @@ class Course extends Component {
           <Preloader></Preloader>
         )}
       </div>
-    )
+    );
   }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(Course)
+export default connect(mapStateToProps, mapDispatchToProps)(Course);

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import axios, { post, put } from "axios";
 import MaterialTable from "material-table";
 import { connect } from "react-redux";
+import NavBar from "../Navbar";
 const mapStateToProps = (state) => ({
   ...state,
 });
@@ -50,18 +51,19 @@ class AddCourse extends Component {
   componentDidMount = () => {
     let id = this.props.match.params.id;
     if (id > 0) {
+      console.log("Hasgdhasgdjhsdgjfhgsdj");
       this.setState({ isEdit: true, course_id: id });
       this.loadEdit(id);
     } else this.loadAdd();
   };
   loadEdit = (id) => {
-    let url = this.props.url+"/api/conceptincourse/?id=" + id;
+    let url = this.props.url + "/api/conceptincourse/?id=" + id;
     axios.get(url).then((res) => {
       this.setState({
         conceptData: res.data.Content,
       });
     });
-    url = this.props.url+"/api/topics/";
+    url = this.props.url + "/api/topics/";
     axios.get(url).then((res) => {
       let data = res.data.Content;
       let topics = {};
@@ -73,7 +75,7 @@ class AddCourse extends Component {
       console.log(columns);
       this.setState({ conceptColumns: columns, isLoaded: true });
     });
-    url = this.props.url+"/api/courses/?id=" + id;
+    url = this.props.url + "/api/courses/?id=" + id;
     axios.get(url).then((res) => {
       console.log(res.data.Content);
       this.setState({
@@ -87,13 +89,13 @@ class AddCourse extends Component {
     this.props.history.push("/Addconcept/");
   };
   loadAdd = () => {
-    let url = this.props.url+"/api/conceptincourse/";
+    let url = this.props.url + "/api/conceptincourse/";
     axios.get(url).then((res) => {
       this.setState({
         conceptData: res.data.Content,
       });
     });
-    url = this.props.url+"/api/topics/";
+    url = this.props.url + "/api/topics/";
     axios.get(url).then((res) => {
       let data = res.data.Content;
       let topics = {};
@@ -159,7 +161,7 @@ class AddCourse extends Component {
         "content-type": "multipart/form-data",
       },
     };
-    let url = this.props.url+"/api/courses/";
+    let url = this.props.url + "/api/courses/";
     put(url, content, config).then((res) => {
       this.reset();
       this.props.history.goBack();
@@ -171,7 +173,7 @@ class AddCourse extends Component {
         "content-type": "multipart/form-data",
       },
     };
-    let url = this.props.url+"/api/courses/";
+    let url = this.props.url + "/api/courses/";
     post(url, content, config).then((res) => {
       this.reset();
       this.props.history.goBack();
@@ -180,68 +182,71 @@ class AddCourse extends Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <form className="col s12" onSubmit={this.submitHandler}>
-            <div className="row">
-              <div className="input-field col s6">
-                <input
-                  value={this.state.course_name}
-                  onChange={this.nameChangeHandler}
-                  id="course_name"
-                  type="text"
-                  className="validate"
-                />
-                <label for="course_name">Course Name</label>
-              </div>
-              <div className="file-field input-field col s6">
-                <div className="btn">
-                  <span>File</span>
-                  <input onChange={this.fileChangeHandler} type="file" />
-                </div>
-                <div className="file-path-wrapper">
+        <NavBar></NavBar>
+        <div className="container">
+          <h3>Course</h3>
+          <br />
+          <div className="row">
+            <form className="col-sm-12" onSubmit={this.submitHandler}>
+              <div className="row">
+                <div className="form-group col-sm-6">
                   <input
-                    className="file-path validate"
-                    value={
-                      this.state.course_thumbnail
-                        ? this.state.course_thumbnail.name
-                        : ""
-                    }
+                    placeholder="Name"
+                    value={this.state.course_name}
+                    onChange={this.nameChangeHandler}
+                    id="course_name"
                     type="text"
+                    className="validate form-control"
                   />
                 </div>
+                <div className="file-field form-group col-sm-6">
+                  <div className="btn">
+                    <span>File</span>
+                    <input onChange={this.fileChangeHandler} type="file" />
+                  </div>
+                  {/* <div className="file-path-wrapper">
+                    <input
+                      className="file-path validate"
+                      value={
+                        this.state.course_thumbnail
+                          ? this.state.course_thumbnail.name
+                          : ""
+                      }
+                      type="text"
+                    />
+                  </div> */}
+                </div>
               </div>
-            </div>
-            <div className="input-field">
-              <textarea
-                value={this.state.course_detail}
-                onChange={this.detailChangeHandler}
-                id="course_detail"
-                className="materialize-textarea"
-              ></textarea>
-              <label for="course_detail">Course Detail</label>
-            </div>
-            <div className="input-field">
-              <MaterialTable
-                columns={this.state.conceptColumns}
-                data={this.state.conceptData}
-                title="Demo Title"
-                options={{ filtering: true }}
-              />
-            </div>
-            <div className="right">
-              <button
-                className="btn waves-effect waves-light"
-                type="submit"
-                name="action"
-              >
-                Submit
-                <i className="material-icons right">send</i>
-              </button>
-            </div>
-          </form>
+              <div className="form-group">
+                <textarea
+                  placeholder="Description"
+                  value={this.state.course_detail}
+                  onChange={this.detailChangeHandler}
+                  id="course_detail"
+                  className="form-control"
+                ></textarea>
+              </div>
+              <br />
+              <div className="form-group">
+                <MaterialTable
+                  columns={this.state.conceptColumns}
+                  data={this.state.conceptData}
+                  title="Concepts in Course"
+                  options={{ filtering: true }}
+                />
+              </div>
+              <br />
+              <div className="right">
+                <button className="btn btn-yellow" type="submit" name="action">
+                  Submit
+                  <i className="material-icons right">send</i>
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     );
   }
 }
-export default connect(mapStateToProps,null)(AddCourse);
+export default connect(mapStateToProps, null)(AddCourse);

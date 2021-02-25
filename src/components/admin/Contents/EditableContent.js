@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Modes from "../../../constants/Modes";
+import Navbar from "../Navbar";
 // import "materialize-css/dist/css/materialize.min.css";
 import Areas from "./Areas";
 import Concepts from "./Concepts";
 import Topics from "./Topics";
+import "../admin.css";
 class EditableContent extends Component {
   state = { mode: Modes.Content.Area };
   setMode = (e) => {
@@ -27,31 +29,23 @@ class EditableContent extends Component {
   render() {
     return (
       <div>
-        <div className="row">
-          <hr />
-          <button
-            id="Area"
-            className="waves-effect waves-light btn col s4"
-            onClick={this.setMode}
-          >
-            Area
-          </button>
-          <button
-            id="Topic"
-            className="waves-effect waves-light btn col s4"
-            onClick={this.setMode}
-          >
-            Topic
-          </button>
-          <button
-            id="Concept"
-            className="waves-effect waves-light btn col s4"
-            onClick={this.setMode}
-          >
-            Concept
-          </button>
+        <Navbar></Navbar>
+        <div className="container">
+          <div className="">
+            <hr />
+            <button id="Area" className="tab-btn" onClick={this.setMode}>
+              Area
+            </button>
+            <button id="Topic" className="tab-btn " onClick={this.setMode}>
+              Topic
+            </button>
+            <button id="Concept" className="tab-btn " onClick={this.setMode}>
+              Concept
+            </button>
+          </div>
+          <br />
+          {this.renderTable()}
         </div>
-        {this.renderTable()}
       </div>
     );
   }

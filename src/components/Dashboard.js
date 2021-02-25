@@ -80,7 +80,7 @@ class Dashboard extends Component
                         <div key={key} class="col-lg-4 col-md-6">
                             <div class="singel-course mt-30">
                                 <div class="thum">
-                                    <div class="image">
+                                    <div  onClick={()=>this.courseTest(obj.id)} class="image">
                                         <img src={this.state.imageUrl + obj.thumbnail}alt="Course"/>
                                     </div>
                                     <div class="price">

@@ -1,0 +1,35 @@
+.tab-btn:hover {
+  color: #ffc600;
+  border-color: #07294d;
+  background-color: #07294d;
+}
+.btn-yellow {
+  background-color: #ffc600;
+  font-family: "Montserrat", sans-serif;
+  color: #07294d;
+}
+.tab-btn {
+  font-weight: 500;
+  width: 33.33%;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid #ffc600;
+  padding: 0 35px;
+  font-size: 16px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  line-height: 50px;
+  color: #07294d;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  z-index: 5;
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  background-color: #ffc600;
+}

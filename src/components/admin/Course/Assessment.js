@@ -3,6 +3,7 @@ import axios, { post, put } from "axios";
 import MaterialTable from "material-table";
 import { Redirect } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Navbar from "../Navbar";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => ({
   ...state,
@@ -42,15 +43,15 @@ class Assessment extends Component {
   }
   load = () => {
     let url =
-    this.props.url+"/api/conceptinassessment/?id=" +
+      this.props.url +
+      "/api/conceptinassessment/?id=" +
       this.props.Assessmentid;
     axios.get(url).then((res) => {
-      
       this.setState({
         conceptData: res.data.Content,
       });
     });
-    url = this.props.url+"/api/topics/";
+    url = this.props.url + "/api/topics/";
     axios.get(url).then((res) => {
       let data = res.data.Content;
       let topics = {};
@@ -59,7 +60,7 @@ class Assessment extends Component {
       }
       let columns = [...this.state.conceptColumns];
       columns[2].lookup = topics;
-      
+
       this.setState({ conceptColumns: columns });
     });
   };
@@ -79,8 +80,8 @@ class Assessment extends Component {
       }
     }
     let newdata = { id: this.props.Assessmentid, ids: ids };
-    
-    let url = this.props.url+"/api/conceptinassessment/";
+
+    let url = this.props.url + "/api/conceptinassessment/";
     post(url, newdata).then((res) => {
       this.props.history.goBack();
     });
@@ -88,23 +89,27 @@ class Assessment extends Component {
   render() {
     return (
       <div>
-        <div className="input-field">
-          <MaterialTable
-            columns={this.state.conceptColumns}
-            data={this.state.conceptData}
-            title="Demo Title"
-            options={{ filtering: true }}
-          />
-        </div>
-        <div className="right">
-          <Link
-            to="/admin/AddAssessment"
-            className="btn waves-effect waves-light"
-            onClick={this.submitHandler}
-          >
-            Submit
-            <i className="material-icons right">send</i>
-          </Link>
+        <Navbar></Navbar>
+        <div className="container">
+          <div className="">
+            <MaterialTable
+              columns={this.state.conceptColumns}
+              data={this.state.conceptData}
+              title="Concepts in Assessment"
+              options={{ filtering: true }}
+            />
+          </div>
+          <br />
+          <div className="right">
+            <Link
+              to="/admin/AddAssessment"
+              className="btn btn-yellow"
+              onClick={this.submitHandler}
+            >
+              Submit
+              <i className="material-icons right">send</i>
+            </Link>
+          </div>
         </div>
       </div>
     );
