@@ -54,7 +54,7 @@ class Login extends Component
                 // check admin or user
                 this.props.Login(user);
                
-                if (user.is_staff) this.props.history.push("admin/dashboard/");
+                if (user.is_staff) this.props.history.push("admin/courses/");
                 else this.props.history.push("/dashboard");
 
               });

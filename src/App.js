@@ -16,8 +16,12 @@ import Dashboard from "./components/Dashboard";
 import Progress from "./components/Progress";
 import CourseProgress from "./components/CourseProgress";
 import AssessmentProgress from "./components/AssessmentProgress";
+import EditableContent from "./components/admin/Contents/EditableContent";
+import Course from "./components/admin/Course/Course";
+import adminCourses from "./components/admin/Course/Courses";
+import AddCourse from "./components/admin/Course/AddCourse";
 
-
+// import adminCourses from "./components/admin/Courses";
 const hist = createBrowserHistory();
 function App() {
   return (
@@ -33,8 +37,12 @@ function App() {
         <Route path="/Progress" component={Progress} />
         <Route path="/CourseProgress" component={CourseProgress} />
         <Route path="/AssessmentProgress" component={AssessmentProgress} />
-        
-        <Redirect from="/" to="/Home" />
+        {/* <Route path="/admin/courses" component={adminCourses} /> */}
+        <Route path="/admin/contents" component={EditableContent} />
+        <Route path="/admin/Course" component={Course} />
+        <Route path="/admin/Courses" component={adminCourses} />
+        <Route path="/admin/addcourse" component={AddCourse} />
+        {/* <Redirect from="/" to="/Home" /> */}
       </Switch>
     </Router>
   );

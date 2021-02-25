@@ -3,9 +3,9 @@ import axios, { post, put } from "axios";
 import { connect } from "react-redux";
 import ActionTypes from "../constants/actiontypes.js";
 import "./timeline.css";
-import ProgressBar from 'react-bootstrap/ProgressBar'
 import Preloader from "./PreLoader";
 import NavBar from "./NavBar";
+import ProgressBar from 'react-bootstrap/ProgressBar'
 const mapStateToProps = (state) => ({
     ...state,
 });
