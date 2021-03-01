@@ -1,6 +1,7 @@
 import MaterialTable from "material-table";
 import React, { Component } from "react";
 import axios from "axios";
+import Preloader from "../../PreLoader";
 import { connect } from "react-redux";
 const mapStateToProps = (state) => ({
   ...state,
@@ -16,14 +17,18 @@ class Areas extends Component {
       { title: "id", field: "id", hidden: true, editable: "never" },
     ],
     data: [],
+    isLoaded: false,
   };
 
   componentDidMount = () => {
     this.load();
   };
   onRowAdd = (newData) => {
+    this.setState({
+      isLoaded: false,
+    });
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/areas/";
+      let url = this.props.url + "/api/areas/";
       axios.post(url, newData).then((res) => {
         this.load();
         resolve();
@@ -31,32 +36,44 @@ class Areas extends Component {
     });
   };
 
-  onRowUpdate = (newData, oldData) =>
+  onRowUpdate = (newData, oldData) => {
+    this.setState({
+      isLoaded: false,
+    });
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/areas/";
+      let url = this.props.url + "/api/areas/";
       axios.put(url, newData).then((res) => {
         this.load();
         resolve();
       });
     });
+  };
 
-  onRowDelete = (newData) =>
+  onRowDelete = (newData) => {
+    this.setState({
+      isLoaded: false,
+    });
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/areas/?id=" + newData.id;
+      let url = this.props.url + "/api/areas/?id=" + newData.id;
       axios.delete(url).then((res) => {
         this.load();
         resolve();
       });
     });
+  };
   load() {
-    let url = this.props.url+"/api/areas/";
+    console.log("loading");
+    let url = this.props.url + "/api/areas/";
     axios.get(url).then((res) => {
       this.setState({ data: res.data.Content });
+      this.setState({
+        isLoaded: true,
+      });
     });
   }
 
   render() {
-    return (
+    return this.state.isLoaded ? (
       <MaterialTable
         title="Area"
         columns={this.state.columns}
@@ -70,8 +87,10 @@ class Areas extends Component {
           actionsColumnIndex: -1,
         }}
       ></MaterialTable>
+    ) : (
+      <Preloader></Preloader>
     );
   }
 }
 
-export default connect(mapStateToProps,null)(Areas);
+export default connect(mapStateToProps, null)(Areas);

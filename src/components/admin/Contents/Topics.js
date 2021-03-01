@@ -32,7 +32,7 @@ class Topics extends Component {
   onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
       console.log(newData);
-      let url = this.props.url+"/api/topics/";
+      let url = this.props.url + "/api/topics/";
       axios.post(url, newData).then((res) => {
         this.load();
         resolve();
@@ -41,7 +41,8 @@ class Topics extends Component {
 
   onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/topics/";
+      console.log(newData);
+      let url = this.props.url + "/api/topics/";
       axios.put(url, newData).then((res) => {
         this.load();
         resolve();
@@ -50,7 +51,7 @@ class Topics extends Component {
 
   onRowDelete = (newData) =>
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/topics/?id=" + newData.id;
+      let url = this.props.url + "/api/topics/?id=" + newData.id;
       axios.delete(url).then((res) => {
         this.load();
         resolve();
@@ -58,11 +59,11 @@ class Topics extends Component {
     });
 
   load() {
-    let url = this.props.url+"/api/topics/";
+    let url = this.props.url + "/api/topics/";
     axios.get(url).then((res) => {
       this.setState({ data: res.data.Content });
     });
-    url = this.props.url+"/api/areas/";
+    url = this.props.url + "/api/areas/";
     axios.get(url).then((res) => {
       let data = res.data.Content;
       let areas = {};
@@ -96,4 +97,4 @@ class Topics extends Component {
   }
 }
 
-export default connect(mapStateToProps,null)(Topics);
+export default connect(mapStateToProps, null)(Topics);
