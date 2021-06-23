@@ -49,24 +49,58 @@ class AddAssessment extends Component {
   };
   onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
-      newData.course_id = this.props.Courseid;
+      console.log(newData);
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "totalQuestions" in newData &&
+        newData["totalQuestions"] !== ""
+      ) {
+        var numbers = /^[0-9]+$/;
+        if (newData["totalQuestions"].match(numbers)) {
+          newData.course_id = this.props.Courseid;
 
-      let url = this.props.url + "/api/assessments/";
-      axios.post(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+          let url = this.props.url + "/api/assessments/";
+          axios.post(url, newData).then((res) => {
+            this.load();
+            resolve();
+          });
+        } else {
+          window.alert("Please enter number in total questions");
+          reject();
+        }
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
-      newData.course_id = this.props.Courseid;
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "totalQuestions" in newData &&
+        newData["totalQuestions"] !== "" &&
+        newData["totalQuestions"] !== ""
+      ) {
+        var numbers = /^[0-9]+$/;
+        if (newData["totalQuestions"].match(numbers)) {
+          newData.course_id = this.props.Courseid;
 
-      let url = this.props.url + "/api/assessments/";
-      axios.put(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+          let url = this.props.url + "/api/assessments/";
+          axios.put(url, newData).then((res) => {
+            this.load();
+            resolve();
+          });
+        } else {
+          window.alert("Please enter number in total questions");
+          reject();
+        }
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowDelete = (newData) =>

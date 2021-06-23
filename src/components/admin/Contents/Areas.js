@@ -23,44 +23,54 @@ class Areas extends Component {
   componentDidMount = () => {
     this.load();
   };
-  onRowAdd = (newData) => {
-    this.setState({
-      isLoaded: false,
-    });
+  onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
-      let url = this.props.url + "/api/areas/";
-      axios.post(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+      console.log(newData);
+      if ("name" in newData && newData["name"] !== "") {
+        let url = this.props.url + "/api/areas/";
+        axios.post(url, newData).then((res) => {
+          // this.loadwithresolve(resolve);
+          this.load();
+          resolve();
+        });
+      } else {
+        window.alert("area name is empty");
+        reject();
+      }
     });
-  };
 
-  onRowUpdate = (newData, oldData) => {
-    this.setState({
-      isLoaded: false,
-    });
+  onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
-      let url = this.props.url + "/api/areas/";
-      axios.put(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+      if ("name" in newData && newData["name"] !== "") {
+        let url = this.props.url + "/api/areas/";
+        axios.put(url, newData).then((res) => {
+          this.loadwithresolve(resolve);
+          // resolve();
+        });
+      } else {
+        window.alert("area name is empty");
+        reject();
+      }
     });
-  };
-
-  onRowDelete = (newData) => {
-    this.setState({
-      isLoaded: false,
-    });
+  onRowDelete = (newData) =>
     new Promise((resolve, reject) => {
       let url = this.props.url + "/api/areas/?id=" + newData.id;
       axios.delete(url).then((res) => {
-        this.load();
-        resolve();
+        this.loadwithresolve(resolve);
+        // resolve();
       });
     });
-  };
+  loadwithresolve(resolve) {
+    console.log("loading");
+    let url = this.props.url + "/api/areas/";
+    axios.get(url).then((res) => {
+      this.setState({ data: res.data.Content });
+      this.setState({
+        isLoaded: true,
+      });
+      resolve();
+    });
+  }
   load() {
     console.log("loading");
     let url = this.props.url + "/api/areas/";
@@ -73,7 +83,7 @@ class Areas extends Component {
   }
 
   render() {
-    return this.state.isLoaded ? (
+    return (
       <MaterialTable
         title="Area"
         columns={this.state.columns}
@@ -87,8 +97,6 @@ class Areas extends Component {
           actionsColumnIndex: -1,
         }}
       ></MaterialTable>
-    ) : (
-      <Preloader></Preloader>
     );
   }
 }

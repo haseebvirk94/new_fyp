@@ -31,22 +31,40 @@ class Topics extends Component {
   };
   onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
-      console.log(newData);
-      let url = this.props.url + "/api/topics/";
-      axios.post(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "area" in newData &&
+        newData["area"] !== ""
+      ) {
+        let url = this.props.url + "/api/topics/";
+        axios.post(url, newData).then((res) => {
+          this.load();
+          resolve();
+        });
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
-      console.log(newData);
-      let url = this.props.url + "/api/topics/";
-      axios.put(url, newData).then((res) => {
-        this.load();
-        resolve();
-      });
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "area" in newData &&
+        newData["area"] !== ""
+      ) {
+        let url = this.props.url + "/api/topics/";
+        axios.put(url, newData).then((res) => {
+          this.load();
+          resolve();
+        });
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowDelete = (newData) =>
@@ -80,7 +98,7 @@ class Topics extends Component {
     console.log(this.state);
     return (
       <MaterialTable
-        title="Area"
+        title="Topics"
         columns={this.state.columns}
         data={this.state.data}
         editable={{

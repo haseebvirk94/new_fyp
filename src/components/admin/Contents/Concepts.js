@@ -47,48 +47,71 @@ class Concepts extends Component {
   };
   onRowAdd = (newData) =>
     new Promise((resolve, reject) => {
-      newData.file = this.state.file;
-      let formData = new FormData();
-      formData.append("name", newData.name);
-      formData.append("topic", newData.topic);
-      formData.append("file", this.state.file);
-      let url = this.props.url+"/api/concepts/";
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
-      axios.post(url, formData, config).then((res) => {
-        this.load();
-        this.setState({ file: null });
-        resolve();
-      });
+      console.log(newData);
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "topic" in newData &&
+        newData["topic"] !== "" &&
+        this.state.file !== null
+      ) {
+        newData.file = this.state.file;
+        let formData = new FormData();
+        formData.append("name", newData.name);
+        formData.append("topic", newData.topic);
+        formData.append("file", this.state.file);
+        let url = this.props.url + "/api/concepts/";
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        axios.post(url, formData, config).then((res) => {
+          this.load();
+          this.setState({ file: null });
+          resolve();
+        });
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowUpdate = (newData, oldData) =>
     new Promise((resolve, reject) => {
-      newData.file = this.state.file;
-      let formData = new FormData();
-      formData.append("id", newData.id);
-      formData.append("name", newData.name);
-      formData.append("topic", newData.topic);
-      formData.append("file", this.state.file);
-      let url = this.props.url+"/api/concepts/";
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
-      axios.put(url, formData, config).then((res) => {
-        this.setState({ file: null });
-        this.load();
-        resolve();
-      });
+      console.log(newData);
+      if (
+        "name" in newData &&
+        newData["name"] !== "" &&
+        "topic" in newData &&
+        newData["topic"] !== ""
+      ) {
+        newData.file = this.state.file;
+        let formData = new FormData();
+        formData.append("id", newData.id);
+        formData.append("name", newData.name);
+        formData.append("topic", newData.topic);
+        formData.append("file", this.state.file);
+        let url = this.props.url + "/api/concepts/";
+        const config = {
+          headers: {
+            "content-type": "multipart/form-data",
+          },
+        };
+        axios.put(url, formData, config).then((res) => {
+          this.setState({ file: null });
+          this.load();
+          resolve();
+        });
+      } else {
+        window.alert("Please enter all fields");
+        reject();
+      }
     });
 
   onRowDelete = (newData) =>
     new Promise((resolve, reject) => {
-      let url = this.props.url+"/api/concepts/?id=" + newData.id;
+      let url = this.props.url + "/api/concepts/?id=" + newData.id;
       axios.delete(url).then((res) => {
         this.load();
         resolve();
@@ -96,11 +119,11 @@ class Concepts extends Component {
     });
 
   load() {
-    let url = this.props.url+"/api/concepts/";
+    let url = this.props.url + "/api/concepts/";
     axios.get(url).then((res) => {
       this.setState({ data: res.data.Content });
     });
-    url = this.props.url+"/api/topics/";
+    url = this.props.url + "/api/topics/";
     axios.get(url).then((res) => {
       let data = res.data.Content;
       let topics = {};
@@ -116,7 +139,7 @@ class Concepts extends Component {
   render() {
     return (
       <MaterialTable
-        title="Area"
+        title="Concepts"
         columns={this.state.columns}
         data={this.state.data}
         editable={{
@@ -133,4 +156,4 @@ class Concepts extends Component {
   }
 }
 
-export default connect(mapStateToProps,null)(Concepts);
+export default connect(mapStateToProps, null)(Concepts);
