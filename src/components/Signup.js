@@ -71,6 +71,11 @@ class Signup extends Component {
       this.setState({ loading: true });
       Axios.post(url, content)
         .then((res) => {
+          url = this.props.url + "/api/email/";
+          content = {
+            user_id: res.data.id,
+          };
+          Axios.post(url, content);
           console.log(res);
           $("#SignupModal").modal("hide");
           $("#loginModal").modal("hide");
